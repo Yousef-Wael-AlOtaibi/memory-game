@@ -48,7 +48,7 @@ function Gui({score,isPlaying,defeats,victories,roundStatus}){
       {!isPlaying && 
       <div id='starting-container' className={seconds>0?'fade-in':'fade-out'}>
         <p><span id={statusObj[roundStatus].id}>{statusObj[roundStatus].text}</span>{seconds>0? `Game starts in ${seconds}`:'Game started!'}</p>
-        <p id='tip-text'>{statusObj[roundStatus].tipText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>
+        <p id={`${roundStatus}-text`} >{statusObj[roundStatus].tipText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>
       </div>}
     </div>
   )

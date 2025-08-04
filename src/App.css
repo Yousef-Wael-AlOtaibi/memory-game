@@ -4,8 +4,14 @@
 .fade-out{
   animation:fade-out 400ms ease-in forwards;
 }
-#tip-text{
+#lose-text{
   color:orange;
+}
+#none-text{
+  color:grey;
+}
+#win-text{
+  color: lightskyblue;
 }
 #starting-container{
   display:flex;
