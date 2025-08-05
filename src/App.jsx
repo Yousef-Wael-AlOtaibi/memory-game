@@ -109,7 +109,7 @@ function Game({setScore,isPlaying,setIsPlaying,setDefeats,setVictories,setRoundS
   },[isPlaying]);
   return(
     isPlaying && <div id='game-container' className={isPlaying? 'fade-in':'fade-out'}>
-      {list.map(result=><button key={result.id} onClick={onClick} className='grid-btn' value={result.id}><img  src={result.image} /></button>)}
+      {list.map(result=><button key={result.id} onClick={onClick} className='grid-btn' value={result.id}><img  src={result.image} width='100%' height='100%' /></button>)}
     </div>
   )
 }

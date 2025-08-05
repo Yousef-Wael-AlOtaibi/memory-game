@@ -37,15 +37,16 @@
 #game-container{
   display:grid;
   background: repeating-linear-gradient(hsl(0,0%,30%) 0%,hsl(0,0%,25%) 10%,hsl(0,0%,25%) 20%,hsl(0,0%,30%) 50%);
-  padding:5%;
-  gap:3%;
-  overflow: scroll;
-  height: auto;
+  padding:5% 5% 5%;
+  gap:5%;
   justify-content: center;
   grid-template-columns: repeat(3,1fr);
+  overflow-y:scroll ;
+  max-width: 1280px;
+  max-height: 900px;
 }
 .grid-btn{
-  background:linear-gradient(black,grey,white);
+  display:block;
 }
 #win{
   color:rgb(0, 255, 30);
@@ -82,5 +83,30 @@
   }
   to{
     opacity:0;
+  }
+}
+@media (max-width:2600px){
+  html{
+    font-size:50px;
+  }
+}
+@media (max-width:1500px){
+  html{
+    font-size:40px;
+  }
+}
+@media (max-width:1000px){
+  html{
+    font-size:30px;
+  }
+}
+@media (max-width:700px){
+  html{
+    font-size:26px;
+  }
+}
+@media (max-width:500px){
+  html{
+    font-size:20px;
   }
 }
