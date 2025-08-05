@@ -10,14 +10,12 @@ const statusObj = {
   'lose':{
     id:'lose',
     text:'You lose! ',
-    insultText:['Skill issue! 💀','Blud is not him... 🤣','Get some help 💁‍♂️','bro, if you need help just ask 🙏','You rn 🫵🤡','meh meh 👎'],
-    tipText:['Do NOT click the same card twice! 🚫','To win, click each image ONCE! 1️⃣']
+    insultText:['Skill issue! 💀','Blud is not him... 🤣','Get some help 💁‍♂️','bro, if you need help just ask 🙏','You rn 🫵🤡','meh meh 👎']
   },
   'none':{
     id:'none',
-    text:'',
-    insultText:[''],
-    tipText:['Do NOT click the same card twice! 🚫','To win, click each image ONCE! 1️⃣']
+    text:'Welcome. ',
+    insultText:['']
   }
 }
 function shuffleArr(arr){
@@ -50,9 +48,11 @@ function Gui({score,isPlaying,defeats,victories,roundStatus}){
       {!isPlaying && 
       <div id='starting-container' className={seconds>0?'fade-in':'fade-out'}>
         <p><span id={statusObj[roundStatus].id}>{statusObj[roundStatus].text}</span>{seconds>0? `Game starts in ${seconds}`:'Game started!'}</p>
-        <p id={`${roundStatus}-text`} >{statusObj[roundStatus].insultText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>
-        {roundStatus==='none'  && <p id='tip-text'>{statusObj[roundStatus].tipText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>}
+        {roundStatus==='lose' && <p id={`lose-text`}>{statusObj[roundStatus].insultText[Math.floor(Math.random()*statusObj.lose.insultText.length)]}</p>}
       </div>}
+      <div id='info-container'>
+        <details className='info'><summary>How to play</summary><ul><li>Don't pick the same img twice!</li><li>To win, click all imgs once!</li></ul></details>
+        <details className='info'><summary>Insults list</summary><ul>{statusObj.lose.insultText.map(insult=><li key={statusObj.lose.insultText.indexOf(insult)+1}><b>{statusObj.lose.insultText.indexOf(insult)+1}.</b> {insult}</li>)}</ul></details></div>
   </div>
   )
 }

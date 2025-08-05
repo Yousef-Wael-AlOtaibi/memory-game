@@ -9,32 +9,32 @@
   color:orange;
 }
 #none-text,#tip-text{
-  color:grey;
-  width:80%;
+  color:hsl(0,0%,80%);
 }
 #win-text{
   color: lightskyblue;
 }
 #starting-container{
   display:flex;
-  background:linear-gradient(hsl(0,0%,0%),hsl(0,0%,100%));
+  background:linear-gradient(hsl(0,0%,0%),hsl(0,0%,60%));
   width:100vw;
-  height:95vh;
+  height:90vh;
   position:fixed;
   top:5vh;
   left:0;
-  overflow: hidden;
+  overflow: scroll;
   flex-direction: column;
   text-align: center;
   color:white;
   font-weight:bold;
   font-style:italic;
   font-family: sans-serif;
-  justify-content: center;
   align-items: center;
-  font-size:2rem;
+  justify-content: center;
+  font-size:2.5rem;
 }
 #game-container{
+  margin-top:5vh;
   display:grid;
   background: repeating-linear-gradient(hsl(0,0%,30%) 0%,hsl(0,0%,25%) 10%,hsl(0,0%,25%) 20%,hsl(0,0%,30%) 50%);
   padding:5% 5% 5%;
@@ -42,6 +42,7 @@
   justify-content: center;
   grid-template-columns: repeat(3,1fr);
   overflow-y:scroll ;
+  height:90vh;
   max-width: 1280px;
   max-height: 900px;
 }
@@ -55,18 +56,31 @@
   color:red;
 }
 #stats{
+  top:0;
+  height:5vh;
   display: flex;
-  justify-content: space-around;
-  border-radius: 5%;
-  align-items: center;
-  color:white;
+  text-align:center;
   font-weight:bold;
+  justify-content: space-around;
+  align-items: center;
+}
+#info-container{
+  bottom:0;
+  height:10vh;
+  display:grid;
+  grid-template-rows: repeat(2,1.5fr);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+details{
+  border:1px solid white;
+  text-align:left;
+}
+#stats,#info-container{
+  color:white;
   position:fixed;
   background:linear-gradient(90deg,hsl(0,0%,0%),hsl(0,0%,10%),hsl(0,0%,20%));
-  text-align:center;
   width:100vw;
-  height:5vh;
-  top:0;
   z-index: 1;
 }
 @keyframes fade-in{
