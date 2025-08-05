@@ -4,24 +4,26 @@ const statusObj = {
   'win':{
     id:'win',
     text:'You win! ',
+    insultText:[''],
     tipText:['You are officially amazing! 🔥','Why did it take blud so long? 😂','Alr... 👌','You winning son? 🧔‍♂️']
   },
   'lose':{
     id:'lose',
-    text:'You lose!',
-    tipText:['Skill issue! 💀','Blud is not him... 🤣','Get some help 💁‍♂️','bro, if you need help just ask 🙏','You rn 🫵🤡','meh meh 👎']
+    text:'You lose! ',
+    insultText:['Skill issue! 💀','Blud is not him... 🤣','Get some help 💁‍♂️','bro, if you need help just ask 🙏','You rn 🫵🤡','meh meh 👎'],
+    tipText:['Do NOT click the same card twice! 🚫','To win, click each image ONCE! 1️⃣']
   },
   'none':{
     id:'none',
     text:'',
-    tipText:['Do NOT click the same card twice! 🚫']
+    insultText:[''],
+    tipText:['Do NOT click the same card twice! 🚫','To win, click each image ONCE! 1️⃣']
   }
 }
 function shuffleArr(arr){
   for(let i = arr.length-1;i>0;i--){
     const j = Math.floor(Math.random()*(i+1));
     [arr[i],arr[j]] = [arr[j],arr[i]];
-    console.log(arr);
   }
   return arr
 }
@@ -44,13 +46,14 @@ function Gui({score,isPlaying,defeats,victories,roundStatus}){
     console.log(isPlaying)
   return(
     <div>
-      <p>{score}</p>
+      <div id='stats'><p>Score: {score}</p><p>Victories: {victories}</p><p>Defeats: {defeats}</p></div>
       {!isPlaying && 
       <div id='starting-container' className={seconds>0?'fade-in':'fade-out'}>
         <p><span id={statusObj[roundStatus].id}>{statusObj[roundStatus].text}</span>{seconds>0? `Game starts in ${seconds}`:'Game started!'}</p>
-        <p id={`${roundStatus}-text`} >{statusObj[roundStatus].tipText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>
+        <p id={`${roundStatus}-text`} >{statusObj[roundStatus].insultText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>
+        {roundStatus==='none'  && <p id='tip-text'>{statusObj[roundStatus].tipText[Math.floor(Math.random()*statusObj[roundStatus].tipText.length)]}</p>}
       </div>}
-    </div>
+  </div>
   )
 }
 function Game({setScore,isPlaying,setIsPlaying,setDefeats,setVictories,setRoundStatus}){
@@ -67,22 +70,33 @@ function Game({setScore,isPlaying,setIsPlaying,setDefeats,setVictories,setRoundS
       return
     }
     setClickedImgs(prev=>[...prev,clickedId])
+    console.log([...clickedImgs,clickedId])
     setScore(prev=>prev+1);
-    setList(shuffleArr(list))
+    console.log(clickedImgs.length)
+    if(clickedImgs.length+1 >= list.length){
+      console.log('player won!');
+      setIsPlaying(false);
+      setVictories(victories=>victories+1);
+      setRoundStatus('win');
+      return
+    }
+    setList(shuffleArr(list));
   }
   function startGame(){
     console.log('starting game...');
     setTimeout(()=>{
     setScore(0);
     setClickedImgs([]);
-    getImages();
-    },5000) // 3150 instead of 3000, to help sync the loading gui and the game load itself.
+    setTimeout(()=>{
+    getImages();},500) //extra time for fade out
+    },5000) 
   }
   const getImages = async ()=>{
     try{
-      const res = await fetch('https://rickandmortyapi.com/api/character/?gender=Male');
-      const data = await res.json();
-      setList(data.results);
+      let res = await fetch('https://rickandmortyapi.com/api/character/?gender=Male&page=1');
+      let data = await res.json();
+      console.log(data);
+      setList(shuffleArr(data.results));
       setIsPlaying(true);
     }
     catch(err){
@@ -91,11 +105,11 @@ function Game({setScore,isPlaying,setIsPlaying,setDefeats,setVictories,setRoundS
 
   }
   useEffect(()=>{
-    if(!isPlaying)startGame() //restarts game when finished or lost;
+    if(!isPlaying)startGame() //restarts game when finished or lost or win;
   },[isPlaying]);
   return(
-    <div>
-      {list.map(result=><button key={result.id} onClick={onClick} value={result.id}><img  src={result.image} /></button>)}
+    isPlaying && <div id='game-container' className={isPlaying? 'fade-in':'fade-out'}>
+      {list.map(result=><button key={result.id} onClick={onClick} className='grid-btn' value={result.id}><img  src={result.image} /></button>)}
     </div>
   )
 }

@@ -4,22 +4,24 @@
 .fade-out{
   animation:fade-out 400ms ease-in forwards;
 }
+
 #lose-text{
   color:orange;
 }
-#none-text{
+#none-text,#tip-text{
   color:grey;
+  width:80%;
 }
 #win-text{
   color: lightskyblue;
 }
 #starting-container{
   display:flex;
-  background:linear-gradient(grey,white);
+  background:linear-gradient(hsl(0,0%,0%),hsl(0,0%,100%));
   width:100vw;
-  height:100vh;
+  height:95vh;
   position:fixed;
-  top:0;
+  top:5vh;
   left:0;
   overflow: hidden;
   flex-direction: column;
@@ -32,12 +34,39 @@
   align-items: center;
   font-size:3rem;
 }
-
+#game-container{
+  display:grid;
+  background: repeating-linear-gradient(hsl(0,0%,30%) 0%,hsl(0,0%,25%) 10%,hsl(0,0%,25%) 20%,hsl(0,0%,30%) 50%);
+  padding:5%;
+  gap:3%;
+  overflow: scroll;
+  height: auto;
+  justify-content: center;
+  grid-template-columns: repeat(3,1fr);
+}
+.grid-btn{
+  background:linear-gradient(black,grey,white);
+}
 #win{
   color:rgb(0, 255, 30);
 }
 #lose{
   color:red;
+}
+#stats{
+  display: flex;
+  justify-content: space-around;
+  border-radius: 5%;
+  align-items: center;
+  color:white;
+  font-weight:bold;
+  position:fixed;
+  background:linear-gradient(90deg,hsl(0,0%,0%),hsl(0,0%,10%),hsl(0,0%,20%));
+  text-align:center;
+  width:100vw;
+  height:5vh;
+  top:0;
+  z-index: 1;
 }
 @keyframes fade-in{
   from{
