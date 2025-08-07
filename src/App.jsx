@@ -10,11 +10,11 @@ const statusObj = {
   'lose':{
     id:'lose',
     text:'You lose! ',
-    insultText:['Skill issue! 💀','Blud is not him... 🤣','Get some help 💁‍♂️','bro, if you need help just ask 🙏','You rn 🫵🤡','meh meh 👎']
+    insultText:['Skill issue! 💀','Blud is not him... 🤣','Get some help 💁‍♂️','Imagine 😭','You rn 🫵🤡','meh meh 👎']
   },
   'none':{
     id:'none',
-    text:'Welcome. ',
+    text:'',
     insultText:['']
   }
 }
@@ -26,7 +26,9 @@ function shuffleArr(arr){
   return arr
 }
 function Gui({score,isPlaying,defeats,victories,roundStatus}){
-  const [seconds,setSeconds] = useState(5)
+  const [seconds,setSeconds] = useState(5);
+  const [settings,setSettings] = useState({});
+  const [infoOn,setInfoOn] = useState(false);
   let intervalId;
   useEffect(()=>{
     console.log('is playing', isPlaying)
@@ -44,15 +46,30 @@ function Gui({score,isPlaying,defeats,victories,roundStatus}){
     console.log(isPlaying)
   return(
     <div>
-      <div id='stats'><p>Score: {score}</p><p>Victories: {victories}</p><p>Defeats: {defeats}</p></div>
+      <div id='stats'>
+      <img src='src\assets\user-groups-with-add-delete-heart-question-mark.png' onClick={()=>{setInfoOn(prev=>!prev)}} id='info-img'/>
+      <p>Score: {score}</p>
+      <p>Victories: {victories}</p>
+      <p>Defeats: {defeats}</p></div>
       {!isPlaying && 
       <div id='starting-container' className={seconds>0?'fade-in':'fade-out'}>
-        <p><span id={statusObj[roundStatus].id}>{statusObj[roundStatus].text}</span>{seconds>0? `Game starts in ${seconds}`:'Game started!'}</p>
+        <p><span id={statusObj[roundStatus].id}>{statusObj[roundStatus].text}</span><span id='starting-text'>{seconds>0? `Game starts in ${seconds}`:'Game started!'}</span></p>
+        <p><span className='bounce'>.</span><span className='bounce'>.</span><span className='bounce'>.</span></p>
         {roundStatus==='lose' && <p id={`lose-text`}>{statusObj[roundStatus].insultText[Math.floor(Math.random()*statusObj.lose.insultText.length)]}</p>}
       </div>}
-      <div id='info-container'>
-        <details className='info'><summary>How to play</summary><ul><li>Don't pick the same img twice!</li><li>To win, click all imgs once!</li></ul></details>
-        <details className='info'><summary>Insults list</summary><ul>{statusObj.lose.insultText.map(insult=><li key={statusObj.lose.insultText.indexOf(insult)+1}><b>{statusObj.lose.insultText.indexOf(insult)+1}.</b> {insult}</li>)}</ul></details></div>
+      {infoOn && <div id='info-container' className={infoOn?'slide-in':'slide-out'}>
+        <details>
+          <summary>How To Play</summary>
+            <p className='details-text'>To win, don't click the same card twice!</p>
+        </details>
+        <details>
+          <summary>Resources</summary>
+          <ul>
+            <li className='details-text'><a href='https://rickandmortyapi.com'>Rick and morty api</a></li>
+            <li className='details-text'><a href='https://www.flaticon.com/free-icons/settings' title='settings icons'>Settings icons</a></li>
+          </ul>
+        </details>
+      </div>}
   </div>
   )
 }
