@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import './App.css'
+import correctAudio from '../src/assets/correct-choice-43861.mp3';
+import incorrectAudio from '../src/assets/incorrect-293358 (1).mp3';
+console.log(incorrectAudio);
+console.log(correctAudio);
 const statusObj = {
   'win':{
     id:'win',
@@ -28,6 +32,7 @@ function shuffleArr(arr){
 function Gui({score,isPlaying,defeats,victories,roundStatus}){
   const [seconds,setSeconds] = useState(5);
   const [settings,setSettings] = useState({});
+  const [settingsOn,setSettingsOn] = useState(false);
   const [infoOn,setInfoOn] = useState(false);
   let intervalId;
   useEffect(()=>{
@@ -47,7 +52,7 @@ function Gui({score,isPlaying,defeats,victories,roundStatus}){
   return(
     <div>
       <div id='stats'>
-      <img src='src\assets\user-groups-with-add-delete-heart-question-mark.png' onClick={()=>{setInfoOn(prev=>!prev)}} id='info-img'/>
+      <img src='public\user-groups-with-add-delete-heart-question-mark.png' onClick={()=>{setInfoOn(prev=>!prev)}} id='info-img'/>
       <p>Score: {score}</p>
       <p>Victories: {victories}</p>
       <p>Defeats: {defeats}</p></div>
@@ -67,6 +72,8 @@ function Gui({score,isPlaying,defeats,victories,roundStatus}){
           <ul>
             <li className='details-text'><a href='https://rickandmortyapi.com'>Rick and morty api</a></li>
             <li className='details-text'><a href='https://www.flaticon.com/free-icons/settings' title='settings icons'>Settings icons</a></li>
+            <li className='details-text'>Lose Sound Effect by <a href="https://pixabay.com/users/u_n2rdb8hxnh-48483999/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=293358">u_n2rdb8hxnh</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=293358">Pixabay </a></li>
+            <li className='details-text'>Win Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=43861">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=43861">Pixabay</a></li>
           </ul>
         </details>
       </div>}
